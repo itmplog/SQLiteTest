@@ -74,10 +74,18 @@ public class MainActivity extends AppCompatActivity {
                 this,
                 R.layout.line,
                 cursor,
-                new String[]{ "news_title", "news_content"},
-                new int[]{R.id.title, R.id.content},
+                new String[]{ "_id", "news_title", "news_content"},
+                new int[]{R.id._id, R.id.title, R.id.content},
                 CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER
         );
         listView.setAdapter(simpleCursorAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(sqLiteDatabase != null && sqLiteDatabase.isOpen()){
+            sqLiteDatabase.close();
+        }
     }
 }
